@@ -1,0 +1,4 @@
+philo
+.DS_Store
+build
+*.o

@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:26:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/18 20:30:48 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/11/27 01:07:55 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	ft_sleep(long time)
 
 	start = get_time();
 	while (get_time() - start < time)
-		usleep(50);
+		usleep(1);
 }

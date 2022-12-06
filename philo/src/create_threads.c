@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:34:58 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/18 03:35:27 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/11/26 16:19:01 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	data_init(t_data *ptr)
 		philo->id = i + 1;
 		philo->times = ptr->time;
 		if (pthread_create(&ptr->philo[i].thread, NULL, &philo_do, philo))
-			return (ft_error(), 1);
+			return (1);
 		i++;
 	}
 	i = 0;
 	while (i < ptr->time.pnb)
 	{
 		if (pthread_detach(ptr->philo[i].thread))
-			return (ft_error(), 1);
+			return (1);
 		i++;
 	}
 	return (0);

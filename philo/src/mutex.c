@@ -6,12 +6,11 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:30:10 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/19 21:26:48 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/11/22 05:09:52 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 void	print_it(char *str, t_philo *ptr)
 {
