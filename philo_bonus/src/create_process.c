@@ -6,18 +6,18 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:26:49 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/04 02:09:07 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/06 05:36:29 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void init_sema(int philo_number)
+void init_sema(t_philo *philo)
 {
 	sem_unlink("forks");
 	sem_unlink("print");
-	sem_open("forks",O_CREAT, S_IRUSR | S_IWUSR, philo_number);
-	sem_open("print",O_CREAT, S_IRUSR | S_IWUSR, philo_number);
+	philo->forks = sem_open("forks",O_CREAT, 0666, philo->times.pnb);
+	philo->print = sem_open("print",O_CREAT, 0666, philo->times.pnb);
 }
 
 void print_it(char *str, t_philo *philo)
@@ -57,6 +57,7 @@ void	*philo_do(void *data_ptr)
 		print_it("is thinking\n", philo);
 		i++;
 	}
+	printf("******************pid = %d", philo->pid[i]);
 	pthread_detach(philo[i].thread);
 }
 
@@ -64,18 +65,19 @@ int	create_process(t_data *data)
 {
 	int		i;
 	int		id;
-	t_philo	*philo;
+	t_philo	*philo = NULL;
 
 	i = 0;
 	data->philo = malloc(sizeof(t_philo) * data->time.pnb);
 	if (!data->philo)
 		return (0);
-	init_sema(data->time.pnb);
+	init_sema(philo);
 	while (i < data->time.pnb)
 	{
 		id = fork (); 
 		if (id == 0)
 		{
+			philo->pid[i] = getpid();
 			philo = &data->philo[i];
 			philo->id = i + 1;
 			philo->times = data->time;

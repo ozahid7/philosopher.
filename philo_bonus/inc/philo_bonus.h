@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/06 04:53:10 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/06 05:13:03 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ typedef struct s_times
 
 typedef struct s_philo
 {
+	int				*pid;
 	int				i;
 	t_times			times;
 	int				id;
 	pthread_t		thread;
 	long			lmeal;
-	t_data			*data;
+	sem_t			*forks;
+	sem_t			*print;
 	int				meals_number;
 	long			start;
 }	t_philo;
 
 typedef struct s_data
 {
-	sem_t			*forks;
-	sem_t			*print;
 	t_philo			*philo;
 	t_times			time;
 }	t_data;
