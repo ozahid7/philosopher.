@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/06 05:13:03 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/08 01:21:41 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 # include "philo_utils_bonus.h"
@@ -34,36 +35,38 @@ typedef struct s_times
 
 }	t_times;
 
+typedef struct s_data t_data;
 typedef struct s_philo
 {
-	int				*pid;
 	int				i;
 	t_times			times;
 	int				id;
 	pthread_t		thread;
 	long			lmeal;
-	sem_t			*forks;
-	sem_t			*print;
+	t_data			*data;
 	int				meals_number;
 	long			start;
 }	t_philo;
 
 typedef struct s_data
 {
+	int				*pid;
+	sem_t			*forks;
+	sem_t			*print;
 	t_philo			*philo;
 	t_times			time;
 }	t_data;
 
-void	*philo_do(void *data_ptr);
+void	*philo_do(t_data *data);
+void	ft_kill(t_data *data);
 int		create_process(t_data *data);
 void	*check_death(void *_philo);
 int		init_semaphores(t_data *data, int pnb);
-void	print_it(char *str, t_philo *philo);
+void	print_it(char *str, t_data *data);
 long	get_time(void);
 int		data_init(t_data *ptr);
 int		ft_parce(t_data *ptr, int ac, char **av);
 int		check_args_int(char ch, int *sig);
-int		check_time(t_philo *philo);
 int		check_empty(char **av);
 int		ft_strlen(char *str);
 void	ft_sleep(long time);

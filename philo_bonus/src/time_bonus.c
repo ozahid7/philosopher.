@@ -6,21 +6,11 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:26:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/04 01:55:59 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/08 00:55:22 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-int	check_time(t_philo *philo)
-{
-	struct timeval		cur;
-
-	gettimeofday(&cur, NULL);
-	if (get_time() - philo->lmeal > philo->times.die)
-		return (1);
-	return (0);
-}
 
 long	get_time(void)
 {
@@ -39,6 +29,6 @@ void	ft_sleep(long time)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-		usleep(1);
+		usleep(50);
 	}
 }
