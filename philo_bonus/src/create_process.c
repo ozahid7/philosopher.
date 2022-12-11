@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:26:49 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/08 01:47:46 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/10 23:03:00 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,53 @@
 
 void init_sema(t_data *data)
 {
+	// data->forks = sem_open("forks",O_CREAT, 0666, data->time.pnb);
+	// data->meals = sem_open("meals",O_CREAT, 0666, 0);
+	// data->print = sem_open("print",O_CREAT, 0666, 1);
+
 	sem_unlink("forks");
 	sem_unlink("print");
-	data->forks = sem_open("forks",O_CREAT, 0666, data->time.pnb);
-	data->print = sem_open("print",O_CREAT, 0666, data->time.pnb);
+	sem_unlink("dead");
+	sem_unlink("meals");
+	data->forks = sem_open("forks", O_CREAT, 0777, data->time.pnb);
+	data->print = sem_open("print", O_CREAT, 0777, 1);
+	data->meals = sem_open("meals", O_CREAT, 0777, 0);
+	data->dead = sem_open("dead",O_CREAT, 0666, 1);
 }
 
-void print_it(char *str, t_data *data)
+void print_it(char *str, t_philo *philo)
 {
-	sem_wait(data->print);
-	printf("%ld %d %s", (get_time() - data->philo->start), data->philo->id, str);
-	sem_post(data->print);
+	sem_wait(philo->print);
+	printf("%ld %d %s", (get_time() - philo->start), philo->id, str);
+	sem_post(philo->print);
 }
 
-void	*philo_do(t_data *data)
+void	philo_do(t_philo *philo)
 {
-	//printf("im in routine\n");
-	data->philo->start = get_time();
-	data->philo->lmeal = get_time();
-	if (data->philo->id % 2 == 0)
-		ft_sleep(data->time.eat);
-	//printf ("-----------------------id = %d \n", data->philo->id);
+	philo->start = get_time();
+	philo->lmeal = get_time();
+	if (philo->id % 2 == 0)
+		usleep(philo->times.eat * 1000);
 	while (1)
 	{
-		sem_wait(data->forks);
-		print_it("has taken a fork\n", data);
-		sem_wait(data->forks);
-		print_it("has taken a fork\n", data);
-		print_it("is eating\n", data);
-		data->philo->lmeal = get_time();
-		ft_sleep(data->time.eat);
-		// if (philo->times.meals > 0)
-		// 	philo->times.meals--;
-		sem_post(data->forks);
-		sem_post(data->forks);
-		print_it("is sleeping\n", data);
-		ft_sleep(data->time.sleep);
-		print_it("is thinking\n", data);
+		sem_wait(philo->forks);
+		print_it("has taken a fork\n", philo);
+		sem_wait(philo->forks);
+		print_it("has taken a fork\n", philo);
+		print_it("is eating\n", philo);
+		philo->lmeal = get_time();
+		usleep(philo->times.eat * 1000);
+		//printf("nb of meals: %d\n", time.meals);
+		sem_post(philo->forks);
+		sem_post(philo->forks);
+		print_it("is sleeping\n", philo);
+		usleep(philo->times.sleep * 1000);
+		print_it("is thinking\n", philo);
+		if (philo->times.meals >= 0)
+			philo->times.meals--;
+		if (philo->times.meals == 0)
+			sem_post(philo->meals);
 	}
-	// printf("******************pid = %d", data->philo->pid[i]);
 }
 
 void ft_kill(t_data *data)
@@ -60,8 +68,6 @@ void ft_kill(t_data *data)
 	int i;
 
 	i = 0;
-	// printf("im in ft_kill \n");
-	// printf("pid = %d\n", data->pid[i]);
 	while(data->pid[i])
 	{
 		kill(data->pid[i], 9);
@@ -83,23 +89,27 @@ int	create_process(t_data *data)
 	if (!data->pid)
 		return (0);
 	init_sema(data);
+	id = 2;
 	while (i < data->time.pnb)
 	{
-		id = fork (); 
+		if (id != 0)
+			id = fork (); 
 		if (id == 0)
 		{
-			//philo->pid[i] = getpid();
-			// printf("pid = %d \n", philo->pid[i]);
 			philo = &data->philo[i];
-			data->philo->id = i + 1;
+			philo->id = i + 1;
 			philo->times = data->time;
-			pthread_create(&data->philo[i].thread, NULL, &check_death, data);
-			philo_do(data);
+			philo->dead = data->dead;
+			philo->forks = data->forks;
+			philo->print = data->print;
+			philo->meals = data->meals;
+			pthread_create(&philo->thread, NULL, &check_death, philo);
+			philo_do(philo);
 			//i++;
+			break ;
 		}
 		else
 			data->pid[i] = id;
-			
 		i++;
 	}
 	return (0);	

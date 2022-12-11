@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/08 01:21:41 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/10 22:58:22 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,31 @@ typedef struct s_philo
 	t_data			*data;
 	int				meals_number;
 	long			start;
+	sem_t			*forks;
+	sem_t			*dead;
+	sem_t			*print;
+	sem_t			*meals;
 }	t_philo;
 
 typedef struct s_data
 {
-	int				*pid;
+	pid_t			*pid;
+	pthread_t		meals_trd;
 	sem_t			*forks;
+	sem_t			*dead;
 	sem_t			*print;
+	sem_t			*meals;
 	t_philo			*philo;
 	t_times			time;
 }	t_data;
 
-void	*philo_do(t_data *data);
+void	philo_do(t_philo *data);
 void	ft_kill(t_data *data);
+void	*ft_meals(void *ptr);
 int		create_process(t_data *data);
 void	*check_death(void *_philo);
 int		init_semaphores(t_data *data, int pnb);
-void	print_it(char *str, t_data *data);
+void	print_it(char *str, t_philo *data);
 long	get_time(void);
 int		data_init(t_data *ptr);
 int		ft_parce(t_data *ptr, int ac, char **av);
