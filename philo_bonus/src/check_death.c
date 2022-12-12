@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   check_death.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 03:26:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/12 05:27:48 by ozahid-          ###   ########.fr       */
+/*   Created: 2022/12/12 04:59:10 by ozahid-           #+#    #+#             */
+/*   Updated: 2022/12/12 04:59:30 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-long	get_time(void)
+void	*check_death(void *data)
 {
-	struct timeval		cur;
-	long long			time;
+	int		i;
+	int		meals;
+	t_philo	*philo;
 
-	gettimeofday(&cur, NULL);
-	time = (cur.tv_sec * 1000) + (cur.tv_usec / 1000);
-	return (time);
-}
-
-void	ft_sleep(long time)
-{
-	long	start;
-
-	start = get_time();
-	while (get_time() - start < time)
-		usleep(1);
+	philo = (t_philo *) data;
+	while (1)
+	{
+		i = 0;
+		meals = 0;
+		while (i < philo->times.pnb)
+		{
+			if (get_time() - philo->lmeal > philo->times.die)
+			{
+				sem_wait(philo->dead);
+				print_it("is dead\n", philo);
+				exit(1);
+			}
+			i++;
+		}
+	}
 }

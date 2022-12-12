@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/10 22:58:22 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/12 05:54:51 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-# include "philo_utils_bonus.h"
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_times
 {
-	char	**args;
 	int		pnb;
 	int		eat;
 	int		sleep;
@@ -35,7 +33,7 @@ typedef struct s_times
 
 }	t_times;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 typedef struct s_philo
 {
 	int				i;
@@ -65,6 +63,8 @@ typedef struct s_data
 }	t_data;
 
 void	philo_do(t_philo *data);
+void	init_sema(t_data *data);
+void	init_data(t_data *data, t_philo *philo, int id);
 void	ft_kill(t_data *data);
 void	*ft_meals(void *ptr);
 int		create_process(t_data *data);
@@ -78,6 +78,8 @@ int		check_args_int(char ch, int *sig);
 int		check_empty(char **av);
 int		ft_strlen(char *str);
 void	ft_sleep(long time);
-int		is_double(int id);
+int		ft_atoi(char *str, int *e);
+void	ft_error(void);
+void	ft_free_args(char **str);
 
 #endif

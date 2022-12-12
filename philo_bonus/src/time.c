@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_bonus.c                                       :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:26:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/08 00:55:22 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/12 05:06:37 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ long	get_time(void)
 	gettimeofday(&cur, NULL);
 	time = (cur.tv_sec * 1000) + (cur.tv_usec / 1000);
 	return (time);
+}
+
+void	ft_kill(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->pid[i])
+	{
+		kill(data->pid[i], 9);
+		i++;
+	}
 }
 
 void	ft_sleep(long time)

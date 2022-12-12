@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/20 00:23:16 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/12 05:49:25 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "philo_utils.h"
 
 typedef struct s_times
 {
-	char	**args;
 	int		pnb;
 	int		eat;
 	int		sleep;
@@ -51,7 +49,6 @@ typedef struct s_data
 	t_times			time;
 }	t_data;
 
-int		check_time(t_philo *philo);
 int		check_death(t_data *data);
 int		init_mutex(t_philo *ptr, int pnb);
 void	print_it(char *str, t_philo *ptr);
@@ -61,9 +58,11 @@ int		ft_parce(t_data *ptr, int ac, char **av);
 int		check_args_int(char ch, int *sig);
 int		check_empty(char **av);
 int		ft_strlen(char *str);
-int		check_empty(char **av);
 void	*philo_do(void *num);
 void	ft_sleep(long time);
 int		is_double(int id);
+void	ft_free_args(char **str);
+int		ft_atoi(char *str, int *e);
+void	ft_error(void);
 
 #endif

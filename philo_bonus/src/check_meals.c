@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils_bonus.h                                :+:      :+:    :+:   */
+/*   check_meals.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 20:36:13 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/20 00:21:34 by ozahid-          ###   ########.fr       */
+/*   Created: 2022/12/12 04:57:29 by ozahid-           #+#    #+#             */
+/*   Updated: 2022/12/12 04:57:59 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_UTILS_BONUS_H
-# define PHILO_UTILS_BONUS_H
+#include "philo_bonus.h"
 
-void	ft_free_args(char **str);
-int		ft_atoi(char *str, int *e);
-void	ft_error(void);
+void	*ft_meals(void *ptr)
+{
+	int		i;
+	t_data	*data;
 
-#endif
+	data = (t_data *) ptr;
+	i = 0;
+	while (i < data->time.pnb)
+	{
+		sem_wait(data->meals);
+		i++;
+	}
+	ft_kill(data);
+	exit(0);
+	return (NULL);
+}

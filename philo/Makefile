@@ -4,8 +4,8 @@ CFLAGS = -Wall -Wextra -Werror -g
 INC = -I ./inc
 BUILD = build
 
-FILES = philo philo_utilis_fun parcing_function create_threads\
-		mutex time 
+FILES = main utilis parsing create_threads\
+		mutex time routine check_death
 
 OBJ = $(addprefix $(BUILD)/, $(FILES:=.o))
 

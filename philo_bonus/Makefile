@@ -1,25 +1,25 @@
-PHILOSOPHER = philo_bonus
+NAME = philo_bonus
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 INC = -I ./inc
 BUILD = build_bonus
 
-FILES = philo_bonus time_bonus philo_utilis_fun_bonus parcing_function_bonus\
-		create_process
+FILES = main time utilis parsing check_death check_meals\
+		create_process semaphores routine
 
 OBJ = $(addprefix $(BUILD)/, $(FILES:=.o))
 
-all = $(PHILOSOPHER)
+all = $(NAME)
 
-$(PHILOSOPHER) : $(OBJ)
-		$(CC) $(OBJ) -o $(PHILOSOPHER)
+$(NAME) : $(OBJ)
+		$(CC) $(OBJ) -o $(NAME)
 $(BUILD)/%.o : src/%.c
 		mkdir -p $(@D)
 		$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 clean :
 		rm -rf $(BUILD)
 fclean : clean
-		rm -rf $(PHILOSOPHER)
+		rm -rf $(NAME)
 re : fclean all
 
 .PHONY : re fclean clean all

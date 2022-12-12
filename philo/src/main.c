@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utils.h                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 20:36:13 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/18 20:36:50 by ozahid-          ###   ########.fr       */
+/*   Created: 2022/11/13 21:29:54 by ozahid-           #+#    #+#             */
+/*   Updated: 2022/12/12 05:45:37 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_UTILS_H
-# define PHILO_UTILS_H
+#include "philo.h"
 
-void	ft_free_args(char **str);
-int		ft_atoi(char *str, int *e);
-void	ft_error(void);
+int	main(int ac, char **av)
+{
+	t_data	data;
 
-#endif
+	if (ft_parce(&data, ac, av))
+		return (ft_error(), 1);
+	if (data_init(&data))
+		return (ft_error(), 1);
+	check_death(&data);
+	pthread_mutex_destroy(&data.philo->myfork);
+	pthread_mutex_destroy(data.philo->next_fork);
+	pthread_mutex_destroy(&data.philo->print);
+	free (data.philo);
+	return (0);
+}

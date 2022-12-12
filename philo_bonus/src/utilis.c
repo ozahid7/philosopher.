@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 20:39:02 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/08 19:54:31 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/12 05:00:11 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ int	ft_atoi(char *str, int *e)
 void	ft_error(void)
 {
 	write(2, "Error\n", 6);
-}
-
-int	is_double(int id)
-{
-	if (id % 2 == 0)
-		return (1);
-	return (0);
 }
 
 int	ft_strlen(char *str)

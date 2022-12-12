@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 21:29:54 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/27 01:07:37 by ozahid-          ###   ########.fr       */
+/*   Created: 2022/12/12 05:23:52 by ozahid-           #+#    #+#             */
+/*   Updated: 2022/12/12 05:24:30 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,47 +38,5 @@ void	*philo_do(void *str)
 		ft_sleep(philo->times.sleep);
 		print_it("is thinking", philo);
 	}
-	return (0);
-}
-
-int	check_death(t_data *data)
-{
-	int	i;
-	int	meals;
-
-	while (1)
-	{
-		i = 0;
-		meals = 0;
-		while (i < data->time.pnb)
-		{
-			if (data->philo[i].times.meals == 0)
-				meals++;
-			if (check_time(&data->philo[i]))
-			{
-				print_it("is died", data->philo);
-				return (1);
-			}
-			if (meals == data->time.pnb)
-				return (0);
-			i++;
-		}
-	}
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	t_data	data;
-
-	if (ft_parce(&data, ac, av))
-		return (ft_error(), 1);
-	if (data_init(&data))
-		return (ft_error(), 1);
-	check_death(&data);
-	pthread_mutex_destroy(&data.philo->myfork);
-	pthread_mutex_destroy(data.philo->next_fork);
-	pthread_mutex_destroy(&data.philo->print);
-	free (data.philo);
 	return (0);
 }
