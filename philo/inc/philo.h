@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/17 04:48:33 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 11:02:58 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_times
 {
@@ -41,20 +41,21 @@ typedef struct s_philo
 	t_data			*data;
 	int				id;
 	long			lmeal;
-	int				meals_number;
 }	t_philo;
 
 typedef struct s_data
 {
 	long			start;
+	int				run;
 	pthread_mutex_t	print;
 	t_philo			*philo;
 	t_times			time;
 }	t_data;
 
 int		check_death(t_data *data);
+void	destroy_mutex(t_data *data);
 int		init_mutex(t_data *data);
-void	print_it(char *str, t_philo *ptr, long time);
+void	print_it(char *str, t_philo *ptr);
 long	get_time(void);
 int		data_init(t_data *ptr);
 int		ft_parce(t_data *ptr, int ac, char **av);

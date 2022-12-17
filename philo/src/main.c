@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:29:54 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/17 08:08:21 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 10:44:27 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	main(int ac, char **av)
 		return (ft_error(), 1);
 	if (data_init(&data))
 		return (ft_error(), 1);
-	//pthread_mutex_destroy(&data.philo->myfork);
-	
-	pthread_mutex_destroy(data.philo->next_fork);
+	destroy_mutex(&data);
 	free (data.philo);
 	return (0);
 }

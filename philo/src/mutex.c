@@ -6,22 +6,36 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:30:10 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/17 04:47:33 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 11:01:23 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_it(char *str, t_philo *philo, long time)
+void	print_it(char *str, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->print);
-	printf("%ld  %d %s\n", time, philo->id, str);
+	printf("%lu  %d %s\n", get_time() - philo->data->start, philo->id, str);
 	pthread_mutex_unlock(&philo->data->print);
+}
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->time.pnb)
+	{
+		pthread_mutex_destroy(&data->philo[i].myfork);
+		i++;
+	}
+	pthread_mutex_destroy(data->philo->next_fork);
+	pthread_mutex_destroy(&data->print);
 }
 
 int	init_mutex(t_data *data)
 {
-	int	i;
+	int		i;
 	t_philo	*philo;
 
 	philo = data->philo;
