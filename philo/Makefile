@@ -9,7 +9,7 @@ FILES = main utilis parsing create_threads\
 
 OBJ = $(addprefix $(BUILD)/, $(FILES:=.o))
 
-all = $(PHILOSOPHER)
+all : $(PHILOSOPHER)
 
 $(PHILOSOPHER) : $(OBJ)
 		$(CC) $(OBJ) -o $(PHILOSOPHER)

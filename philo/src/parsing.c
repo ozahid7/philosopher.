@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing_function.c                                 :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 00:40:46 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/19 01:50:18 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 08:38:37 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_parce(t_data *ptr, int ac, char **av)
+int	ft_parce(t_data *data, int ac, char **av)
 {
 	int		i;
 	int		e;
@@ -22,18 +22,19 @@ int	ft_parce(t_data *ptr, int ac, char **av)
 		return (1);
 	if (ac <= 6 && ac >= 5)
 	{
-		ptr->time.pnb = ft_atoi(av[1], &e);
-		if (ptr->time.pnb == 0)
+		data->time.pnb = ft_atoi(av[1], &e);
+		if (data->time.pnb == 0)
 			return (1);
-		ptr->time.die = ft_atoi(av[2], &e);
-		ptr->time.eat = ft_atoi(av[3], &e);
-		ptr->time.sleep = ft_atoi(av[4], &e);
+		data->time.die = ft_atoi(av[2], &e);
+		data->time.eat = ft_atoi(av[3], &e);
+		data->time.sleep = ft_atoi(av[4], &e);
+		data->start = get_time();
 		if (e == 1)
 			return (1);
 		if (ac == 5)
-			ptr->time.meals = -1;
+			data->time.meals = -1;
 		else
-			ptr->time.meals = ft_atoi(av[5], &e);
+			data->time.meals = ft_atoi(av[5], &e);
 	}
 	else
 		return (1);

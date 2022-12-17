@@ -6,35 +6,39 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 03:34:58 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/11/26 16:19:01 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 08:38:02 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	data_init(t_data *ptr)
+int	data_init(t_data *data)
 {
 	int		i;
 	t_philo	*philo;
+	//long	begin;
 
 	i = 0;
-	ptr->philo = (t_philo *) malloc(sizeof(t_philo) * ptr->time.pnb);
-	if (ptr->philo == NULL)
+	data->philo = (t_philo *) malloc(sizeof(t_philo) * data->time.pnb);
+	if (data->philo == NULL)
 		return (1);
-	init_mutex(ptr->philo, ptr->time.pnb);
-	while (i < ptr->time.pnb)
+
+	init_mutex(data);
+	while (i < data->time.pnb)
 	{
-		philo = &ptr->philo[i];
+		philo = &data->philo[i];
 		philo->id = i + 1;
-		philo->times = ptr->time;
-		if (pthread_create(&ptr->philo[i].thread, NULL, &philo_do, philo))
+		philo->times = data->time;
+		philo->data = data;
+		if (pthread_create(&data->philo[i].thread, NULL, &philo_do, philo))
 			return (1);
 		i++;
 	}
+	check_death(data);
 	i = 0;
-	while (i < ptr->time.pnb)
+	while (i < data->time.pnb)
 	{
-		if (pthread_detach(ptr->philo[i].thread))
+		if (pthread_detach(data->philo[i].thread))
 			return (1);
 		i++;
 	}
