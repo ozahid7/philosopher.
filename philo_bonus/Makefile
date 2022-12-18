@@ -9,7 +9,7 @@ FILES = main time utilis parsing check_death check_meals\
 
 OBJ = $(addprefix $(BUILD)/, $(FILES:=.o))
 
-all = $(NAME)
+all : $(NAME)
 
 $(NAME) : $(OBJ)
 		$(CC) $(OBJ) -o $(NAME)

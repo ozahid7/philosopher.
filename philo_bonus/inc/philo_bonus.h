@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 19:52:19 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/12 05:54:51 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 11:27:24 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	long			lmeal;
 	t_data			*data;
-	int				meals_number;
-	long			start;
 	sem_t			*forks;
 	sem_t			*dead;
 	sem_t			*print;
@@ -52,6 +50,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	long			start;
 	pid_t			*pid;
 	pthread_t		meals_trd;
 	sem_t			*forks;

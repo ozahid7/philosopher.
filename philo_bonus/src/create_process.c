@@ -6,7 +6,7 @@
 /*   By: ozahid- <ozahid-@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 23:26:49 by ozahid-           #+#    #+#             */
-/*   Updated: 2022/12/12 05:06:29 by ozahid-          ###   ########.fr       */
+/*   Updated: 2022/12/17 11:40:30 by ozahid-          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_data(t_data *data, t_philo *philo, int id)
 			philo->dead = data->dead;
 			philo->forks = data->forks;
 			philo->print = data->print;
+			philo->data = data;
 			philo->meals = data->meals;
 			pthread_create(&philo->thread, NULL, &check_death, philo);
 			philo_do(philo);
